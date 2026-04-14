@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MNIST Digit Classifier</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f0f11;
+      color: #e8e8e8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: #1a1a1f;
+      border: 1px solid #2a2a32;
+      border-radius: 12px;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      margin-bottom: 1.25rem;
+    }
+
+    .card h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    /* Canvas */
+    #canvas-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    canvas {
+      border: 2px solid #333;
+      border-radius: 8px;
+      cursor: crosshair;
+      touch-action: none;
+      background: #000;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    button {
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.85; }
+
+    .btn-primary { background: #5b6af0; color: #fff; }
+    .btn-secondary { background: #2e2e38; color: #ccc; }
+    .btn-danger { background: #c0392b; color: #fff; }
+
+    /* Result */
+    #result-section { display: none; }
+
+    .digit-display {
+      font-size: 4rem;
+      font-weight: 700;
+      text-align: center;
+      color: #5b6af0;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .confidence-label {
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .prob-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .prob-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+    }
+
+    .prob-label { width: 14px; text-align: right; color: #aaa; }
+
+    .prob-track {
+      flex: 1;
+      height: 8px;
+      background: #2a2a32;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .prob-fill {
+      height: 100%;
+      background: #5b6af0;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .prob-pct { width: 38px; text-align: right; color: #666; }
+
+    /* Feedback */
+    #feedback-section { display: none; }
+
+    .feedback-label {
+      font-size: 0.85rem;
+      color: #999;
+      margin-bottom: 0.75rem;
+    }
+
+    .digit-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .digit-btn {
+      background: #2a2a32;
+      color: #ddd;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .digit-btn:hover { background: #3e3e4c; }
+    .digit-btn.selected { background: #5b6af0; color: #fff; }
+
+    .feedback-confirm {
+      margin-top: 0.75rem;
+    }
+
+    .feedback-success {
+      color: #2ecc71;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    /* History */
+    #history-section {}
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 0.4rem 0.5rem;
+      color: #666;
+      border-bottom: 1px solid #2a2a32;
+    }
+
+    tbody tr:nth-child(even) { background: #16161b; }
+
+    tbody td {
+      padding: 0.4rem 0.5rem;
+      color: #bbb;
+    }
+
+    .correct-tag {
+      color: #2ecc71;
+      font-weight: 600;
+    }
+    .wrong-tag {
+      color: #e74c3c;
+      font-weight: 600;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 2px solid #333;
+      border-top-color: #5b6af0;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<h1>MNIST Digit Classifier</h1>
+<p class="subtitle">Draw a digit (0–9) and let the model guess</p>
+
+<!-- Drawing canvas -->
+<div class="card">
+  <h2>Draw</h2>
+  <div id="canvas-wrap">
+    <canvas id="canvas" width="280" height="280"></canvas>
+    <div class="btn-row">
+      <button class="btn-primary" id="predict-btn">Predict</button>
+      <button class="btn-secondary" id="clear-btn">Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- Prediction result -->
+<div class="card" id="result-section">
+  <h2>Prediction</h2>
+  <div class="digit-display" id="digit-display">—</div>
+  <div class="confidence-label" id="conf-label"></div>
+  <div class="prob-bar-wrap" id="prob-bars"></div>
+</div>
+
+<!-- Feedback -->
+<div class="card" id="feedback-section">
+  <h2>Feedback</h2>
+  <p class="feedback-label">Was the prediction wrong? Select the correct digit:</p>
+  <div class="digit-grid" id="digit-grid"></div>
+  <div class="feedback-confirm">
+    <button class="btn-danger" id="submit-feedback-btn" style="display:none">Submit Correction</button>
+    <div class="feedback-success" id="feedback-success">Feedback recorded!</div>
+  </div>
+</div>
+
+<!-- History -->
+<div class="card" id="history-section">
+  <h2>Recent Predictions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Time</th>
+        <th>Predicted</th>
+        <th>Confidence</th>
+        <th>Feedback</th>
+      </tr>
+    </thead>
+    <tbody id="history-body"></tbody>
+  </table>
+</div>
+
+<script>
+  // ---- Canvas drawing ----
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let lastX = 0, lastY = 0;
+
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 18;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const src = e.touches ? e.touches[0] : e;
+    return [(src.clientX - rect.left) * scaleX, (src.clientY - rect.top) * scaleY];
+  }
+
+  canvas.addEventListener('mousedown', e => { drawing = true; [lastX, lastY] = getPos(e); });
+  canvas.addEventListener('mousemove', e => {
+    if (!drawing) return;
+    const [x, y] = getPos(e);
+    ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(x, y); ctx.stroke();
+    [lastX, lastY] = [x, y];
+  });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseleave', () => drawing = false);
+
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; [lastX, lastY] = getPos(e); });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (!drawing) return;
+    const [x, y] = getPos(e);
+    ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(x, y); ctx.stroke();
+    [lastX, lastY] = [x, y];
+  });
+  canvas.addEventListener('touchend', () => drawing = false);
+
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('result-section').style.display = 'none';
+    document.getElementById('feedback-section').style.display = 'none';
+    currentPredictionId = null;
+    selectedCorrection = null;
+  });
+
+  // ---- Prediction ----
+  let currentPredictionId = null;
+  let selectedCorrection = null;
+
+  document.getElementById('predict-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('predict-btn');
+    btn.innerHTML = '<span class="spinner"></span>Predicting…';
+    btn.disabled = true;
+
+    const b64 = canvas.toDataURL('image/png').split(',')[1];
+
+    try {
+      const resp = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: b64 }),
+      });
+      if (!resp.ok) throw new Error(await resp.text());
+      const data = await resp.json();
+      showResult(data);
+      loadHistory();
+    } catch (err) {
+      alert('Prediction failed: ' + err.message);
+    } finally {
+      btn.innerHTML = 'Predict';
+      btn.disabled = false;
+    }
+  });
+
+  function showResult(data) {
+    currentPredictionId = data.prediction_id;
+    selectedCorrection = null;
+
+    document.getElementById('digit-display').textContent = data.digit;
+    document.getElementById('conf-label').textContent =
+      `Confidence: ${(data.confidence * 100).toFixed(1)}%`;
+
+    const barsEl = document.getElementById('prob-bars');
+    barsEl.innerHTML = '';
+    data.probabilities.forEach((p, i) => {
+      const row = document.createElement('div');
+      row.className = 'prob-row';
+      row.innerHTML = `
+        <span class="prob-label">${i}</span>
+        <div class="prob-track"><div class="prob-fill" style="width:${(p*100).toFixed(1)}%"></div></div>
+        <span class="prob-pct">${(p*100).toFixed(1)}%</span>
+      `;
+      barsEl.appendChild(row);
+    });
+
+    document.getElementById('result-section').style.display = 'block';
+
+    // Reset feedback UI
+    document.getElementById('feedback-success').style.display = 'none';
+    document.getElementById('submit-feedback-btn').style.display = 'none';
+    buildDigitGrid(data.digit);
+    document.getElementById('feedback-section').style.display = 'block';
+  }
+
+  // ---- Feedback ----
+  function buildDigitGrid(predictedDigit) {
+    const grid = document.getElementById('digit-grid');
+    grid.innerHTML = '';
+    for (let d = 0; d <= 9; d++) {
+      const btn = document.createElement('button');
+      btn.className = 'digit-btn' + (d === predictedDigit ? ' selected' : '');
+      btn.textContent = d;
+      btn.dataset.digit = d;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.digit-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedCorrection = d;
+        document.getElementById('submit-feedback-btn').style.display =
+          d !== predictedDigit ? 'inline-block' : 'none';
+      });
+      grid.appendChild(btn);
+    }
+  }
+
+  document.getElementById('submit-feedback-btn').addEventListener('click', async () => {
+    if (selectedCorrection === null || currentPredictionId === null) return;
+    try {
+      const resp = await fetch('/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prediction_id: currentPredictionId, correct_label: selectedCorrection }),
+      });
+      if (!resp.ok) throw new Error(await resp.text());
+      document.getElementById('feedback-success').style.display = 'block';
+      document.getElementById('submit-feedback-btn').style.display = 'none';
+      loadHistory();
+    } catch (err) {
+      alert('Feedback failed: ' + err.message);
+    }
+  });
+
+  // ---- History ----
+  async function loadHistory() {
+    try {
+      const resp = await fetch('/predictions?limit=10');
+      const data = await resp.json();
+      const tbody = document.getElementById('history-body');
+      tbody.innerHTML = '';
+      data.predictions.forEach(row => {
+        const isWrong = row.correct_label !== null && row.correct_label !== row.digit;
+        const feedbackCell = row.correct_label === null
+          ? '<span style="color:#555">—</span>'
+          : row.correct_label === row.digit
+            ? `<span class="correct-tag">✓ ${row.correct_label}</span>`
+            : `<span class="wrong-tag">✗ → ${row.correct_label}</span>`;
+
+        const time = new Date(row.created_at).toLocaleTimeString();
+        tbody.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${row.id}</td>
+            <td>${time}</td>
+            <td>${row.digit}</td>
+            <td>${(row.confidence * 100).toFixed(1)}%</td>
+            <td>${feedbackCell}</td>
+          </tr>
+        `);
+      });
+      document.getElementById('history-section').style.display = 'block';
+    } catch (_) {}
+  }
+
+  loadHistory();
+</script>
+</body>
+</html>
