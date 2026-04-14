@@ -1,0 +1,202 @@
+[
+  {
+    "id": "job-001",
+    "title": "Senior Backend Engineer",
+    "company": "Stripe",
+    "location": "Remote (US)",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Python", "Go", "PostgreSQL", "Kubernetes", "gRPC"],
+    "description": "Build and scale payment infrastructure serving millions of businesses globally. You will design distributed systems, own reliability for critical payment flows, and mentor junior engineers. We expect deep expertise in Python or Go, strong systems-thinking, and experience with high-throughput services."
+  },
+  {
+    "id": "job-002",
+    "title": "ML Engineer — Recommendations",
+    "company": "Spotify",
+    "location": "Stockholm, Sweden",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Python", "TensorFlow", "Spark", "Kafka", "GCP"],
+    "description": "Develop and maintain recommendation models powering Discover Weekly and personalised playlists. Work closely with data scientists to move experiments to production. Strong Python, hands-on ML model deployment, and comfort with large-scale data pipelines required."
+  },
+  {
+    "id": "job-003",
+    "title": "Staff Software Engineer — Platform",
+    "company": "Notion",
+    "location": "San Francisco, CA",
+    "type": "full-time",
+    "level": "staff",
+    "tech": ["TypeScript", "Node.js", "PostgreSQL", "Redis", "AWS"],
+    "description": "Define and build Notion's developer platform and API ecosystem. You will set technical direction, lead cross-team projects, and improve developer experience for thousands of integrations. Requires 8+ years of experience, TypeScript/Node.js mastery, and strong architectural instincts."
+  },
+  {
+    "id": "job-004",
+    "title": "Data Engineer",
+    "company": "Airbnb",
+    "location": "Remote (EU)",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Python", "Spark", "dbt", "Snowflake", "Airflow"],
+    "description": "Design and maintain data pipelines that power Airbnb's analytics and ML platform. Own data quality, build reusable dbt models, and work with analysts and data scientists to deliver reliable datasets. Python, Spark, and modern data stack experience essential."
+  },
+  {
+    "id": "job-005",
+    "title": "Frontend Engineer — Design Systems",
+    "company": "Figma",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["TypeScript", "React", "CSS", "Storybook", "Vite"],
+    "description": "Build and evolve Figma's component library and design tokens used across all product surfaces. Deep React and TypeScript required. You care about accessibility, visual consistency, and developer experience. Experience maintaining a public design system is a strong plus."
+  },
+  {
+    "id": "job-006",
+    "title": "DevOps / Platform Engineer",
+    "company": "HashiCorp",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Go", "Terraform", "Kubernetes", "Prometheus", "AWS"],
+    "description": "Maintain and improve the infrastructure platform that runs HashiCorp's cloud products. Automate toil, improve observability, and help engineering teams ship faster. Strong Kubernetes, Terraform, and Go expected. On-call rotation required."
+  },
+  {
+    "id": "job-007",
+    "title": "AI Product Engineer",
+    "company": "Anthropic",
+    "location": "San Francisco, CA",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Python", "TypeScript", "React", "FastAPI", "Claude API"],
+    "description": "Ship AI-powered product features end-to-end. You will prototype rapidly, work directly with researchers, and turn model capabilities into delightful user experiences. Comfort with both backend (Python/FastAPI) and frontend (React/TypeScript) required. Passion for AI safety a plus."
+  },
+  {
+    "id": "job-008",
+    "title": "Backend Engineer — Search",
+    "company": "Elastic",
+    "location": "Remote (Europe)",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Java", "Elasticsearch", "Lucene", "Kubernetes", "Kafka"],
+    "description": "Contribute to the Elasticsearch core search engine. Work on query optimisation, distributed indexing, and relevance improvements. Java expertise required; experience with information retrieval or distributed databases a strong plus."
+  },
+  {
+    "id": "job-009",
+    "title": "Machine Learning Scientist",
+    "company": "DeepMind",
+    "location": "London, UK",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Python", "JAX", "PyTorch", "CUDA", "GCP"],
+    "description": "Conduct research and develop novel ML algorithms in areas such as reinforcement learning, generative models, or scientific applications. PhD or equivalent research experience required. Publications in top venues (NeurIPS, ICML, ICLR) strongly preferred."
+  },
+  {
+    "id": "job-010",
+    "title": "Full Stack Engineer — Early Stage Startup",
+    "company": "Stealth AI Startup",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["TypeScript", "Next.js", "PostgreSQL", "tRPC", "Vercel"],
+    "description": "Be one of the first 10 engineers at a well-funded AI startup. Ship features fast, wear multiple hats, and help define the technical culture. TypeScript full-stack experience required. Comfort with ambiguity and a bias for action are essential."
+  },
+  {
+    "id": "job-011",
+    "title": "Security Engineer",
+    "company": "Cloudflare",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Rust", "Go", "Linux", "TLS", "eBPF"],
+    "description": "Protect Cloudflare's global network and customer traffic. Work on DDoS mitigation, zero-trust access, and cryptographic protocol implementation. Deep networking knowledge, Rust or Go, and experience with large-scale infrastructure required."
+  },
+  {
+    "id": "job-012",
+    "title": "Android Engineer",
+    "company": "Duolingo",
+    "location": "Pittsburgh, PA",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Kotlin", "Android SDK", "Jetpack Compose", "Coroutines", "GraphQL"],
+    "description": "Build engaging, accessible learning experiences for Duolingo's Android app used by 500M+ learners. Strong Kotlin and Jetpack Compose required. You care deeply about performance, animation quality, and inclusive design."
+  },
+  {
+    "id": "job-013",
+    "title": "Data Scientist — Growth",
+    "company": "Linear",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Python", "SQL", "dbt", "Looker", "Statsig"],
+    "description": "Partner with the Growth and Product teams to design experiments, analyse user behaviour, and surface insights that drive activation and retention. Strong SQL and Python, experience with A/B testing frameworks, and ability to communicate findings to non-technical stakeholders required."
+  },
+  {
+    "id": "job-014",
+    "title": "iOS Engineer",
+    "company": "Revolut",
+    "location": "Remote (Europe)",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Swift", "SwiftUI", "Combine", "XCTest", "CI/CD"],
+    "description": "Build new financial product features for Revolut's iOS app with 35M+ customers. Swift/SwiftUI mastery, attention to UX detail, and experience with complex state management required. Fintech or highly regulated industry experience a plus."
+  },
+  {
+    "id": "job-015",
+    "title": "Site Reliability Engineer",
+    "company": "GitHub",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Go", "Ruby", "Kubernetes", "MySQL", "Datadog"],
+    "description": "Keep GitHub's services highly available for 100M+ developers. Drive incident response, own SLOs, and build automation to eliminate classes of failure. Experience with large-scale stateful services, Go or Ruby, and on-call discipline required."
+  },
+  {
+    "id": "job-016",
+    "title": "NLP / LLM Engineer",
+    "company": "Cohere",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Python", "PyTorch", "Transformers", "RLHF", "CUDA"],
+    "description": "Fine-tune and evaluate large language models for enterprise use cases including RAG, classification, and summarisation. Strong Python, HuggingFace Transformers, and hands-on LLM training experience required. RLHF or instruction-tuning experience is a strong plus."
+  },
+  {
+    "id": "job-017",
+    "title": "Cloud Infrastructure Engineer",
+    "company": "Snowflake",
+    "location": "Remote (US)",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Java", "AWS", "Azure", "Terraform", "Kubernetes"],
+    "description": "Design and operate the multi-cloud infrastructure powering Snowflake's Data Cloud. Work on autoscaling, cost optimisation, and cross-cloud portability. Java and cloud provider (AWS/Azure/GCP) expertise required."
+  },
+  {
+    "id": "job-018",
+    "title": "Backend Engineer — Fintech",
+    "company": "Wise",
+    "location": "Tallinn, Estonia",
+    "type": "full-time",
+    "level": "mid",
+    "tech": ["Java", "Python", "PostgreSQL", "Kafka", "AWS"],
+    "description": "Build the money movement infrastructure used by millions of people sending money internationally. Work on compliance integrations, partner bank APIs, and payment routing logic. Java or Python, PostgreSQL, and interest in financial systems required."
+  },
+  {
+    "id": "job-019",
+    "title": "Engineering Manager — Backend",
+    "company": "Vercel",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "manager",
+    "tech": ["Node.js", "Rust", "Edge Computing", "Kubernetes", "TypeScript"],
+    "description": "Lead a team of 6–8 backend engineers building Vercel's edge runtime and deployment infrastructure. Balance technical leadership with people management. Requires prior engineering management experience and strong technical credibility in distributed systems."
+  },
+  {
+    "id": "job-020",
+    "title": "Founding Engineer",
+    "company": "AI Infrastructure Startup",
+    "location": "Remote",
+    "type": "full-time",
+    "level": "senior",
+    "tech": ["Python", "Rust", "CUDA", "Kubernetes", "MLOps"],
+    "description": "Join as one of the first engineers at a seed-stage AI infrastructure company. Shape the product, architecture, and team culture from day one. Requires senior-level engineering skills, comfort with ambiguity, and genuine excitement about the AI infrastructure space."
+  }
+]
