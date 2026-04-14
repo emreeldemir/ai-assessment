@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  mnist-api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist trained model weights and SQLite DB across restarts
+      - mnist-data:/app/data
+      - mnist-model:/app/model
+    environment:
+      MODEL_PATH: /app/model/mnist_cnn.pt
+      DB_PATH: /app/data/mnist.db
+      DATA_DIR: /app/data
+      TRAIN_EPOCHS: "5"
+    restart: unless-stopped
+
+volumes:
+  mnist-data:
+  mnist-model:
