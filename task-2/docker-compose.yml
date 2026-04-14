@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  matchmaker:
+    build: .
+    ports:
+      - "8001:8000"
+    volumes:
+      # Mount data dir so jobs.json can be swapped without rebuilding
+      - ./data:/app/data
+    environment:
+      JOBS_PATH: /app/data/jobs.json
+      EMBEDDING_MODEL: all-MiniLM-L6-v2
+      # Optional: set your Anthropic API key for LLM-generated explanations
+      # Without it, template-based explanations are used (still fully functional)
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+    restart: unless-stopped
