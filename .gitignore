@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+
+# Model weights & datasets (large binaries — train on first boot)
+task-1/model/*.pt
+task-1/data/
+
+# SQLite database
+task-1/data/*.db
+
+# Sentence-transformers cache
+.cache/
+~/.cache/
+
+# Docker
+.docker/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
